@@ -81,7 +81,9 @@ controller:
       loggedInUsersCanDoAnything:
         allowAnonymousRead: false
     configScripts:
-        credentials: |
+      welcome-message: |
+        systemMessage: Welcome to our CI\CD server. This Jenkins is configured and managed 'as code'.
+      credentials: |
           system:
             domainCredentials:
               - credentials:
@@ -90,7 +92,7 @@ controller:
                       scope: GLOBAL
                       username: "${DOCKER_USER}"
                       password: "${DOCKER_PASS}"
-        git-job: |
+      git-job: |
           jobs:
             - script: >
                 job('seed-job') {
@@ -114,7 +116,6 @@ controller:
                         scm('* * * * *')
                     }
                 }
-
     configMapAnnotations: {}
     configUrls: []
     defaultConfig: true
@@ -308,8 +309,8 @@ controller:
       cpu: 2000m
       memory: 4096Mi
     requests:
-      cpu: 50m
-      memory: 256Mi
+      cpu: 500m
+      memory: 1024Mi
   route:
     annotations: {}
     enabled: false
@@ -428,9 +429,3 @@ serviceAccountAgent:
   extraLabels: {}
   imagePullSecretName: null
   name: null
-additionalSecrets: 
-    - name: docker-hub-secret
-      mountPath: "/var/jenkins_home/docker-secrets"
-      data:
-        DOCKER_USER: "devops2k23"
-        DOCKER_PASS: "Skedar@7587"
