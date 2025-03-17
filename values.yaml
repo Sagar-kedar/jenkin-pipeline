@@ -234,10 +234,6 @@ controller:
   - workflow-aggregator
   - git
   - configuration-as-code
-  - docker-workflow
-  - workflow-api
-  - workflow-step-api
-  - workflow-support
   javaOpts: null
   jenkinsAdminEmail: null
   jenkinsHome: /var/jenkins_home
@@ -287,7 +283,7 @@ controller:
       periodSeconds: 10
       timeoutSeconds: 5
     startupProbe:
-      failureThreshold: 12
+      failureThreshold: 20
       httpGet:
         path: '{{ default "" .Values.controller.jenkinsUriPrefix }}/login'
         port: http
