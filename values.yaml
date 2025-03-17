@@ -235,8 +235,6 @@ controller:
   - git:5.7.0
   - configuration-as-code:1932.v75cb_b_f1b_698d
   - docker-workflow:563.vd5d2e5eb_7a_7c
-  installplugins:
-  - configuration-as-code
   javaOpts: null
   jenkinsAdminEmail: null
   jenkinsHome: /var/jenkins_home
