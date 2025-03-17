@@ -80,19 +80,41 @@ controller:
     authorizationStrategy: |-
       loggedInUsersCanDoAnything:
         allowAnonymousRead: false
-    configMapAnnotations: {}
     configScripts:
-      git-job: "jobs:\n  - script: >\n      job('seed-job') {\n          description('Seed
-        job to generate pipeline jobs from the tools Git repository.')\n          scm
-        {\n              git {\n                  remote {\n                      url('https://github.com/Sagar-kedar/jenkins.git')\n
-        \                     credentialsId: 'githubcred'\n                  }\n                  branch('main')\n
-        \             }\n          }\n          steps {\n              dsl {\n                  external('jobs/*.groovy')\n
-        \                 removeAction('DELETE')              \n              }\n
-        \         }\n          triggers {\n              scm('* * * * *')\n          }\n
-        \     }\n"
-      welcome-message: |
-        jenkins:
-          systemMessage: Welcome to our CI\CD server. This Jenkins is configured and managed 'as code'.
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
+                  - usernamePassword:
+                      id: "docker-hub-secret"
+                      scope: GLOBAL
+                      username: "${DOCKER_USER}"
+                      password: "${DOCKER_PASS}"
+        git-job: |
+           jobs:
+            - script: >
+              job('seed-job') {
+                  description('Seed job to generate pipeline jobs from the tools Git repository.')
+                  scm {
+                      git {
+                          remote {
+                              url('https://github.com/Sagar-kedar/jenkin-pipeline.git')
+                              credentials('githubcred')
+                          }
+                          branch('main') 
+                      }
+                  }
+                  steps {
+                      dsl {
+                          external('jenkin-pipeline/jobs/*.groovy')
+                          removeAction('DELETE')              
+                      }
+                  }
+                  triggers {
+                      scm('* * * * *')
+                  }
+              }
+    configMapAnnotations: {}
     configUrls: []
     defaultConfig: true
     overwriteConfiguration: false
@@ -212,6 +234,8 @@ controller:
   - workflow-aggregator:600.vb_57cdd26fdd7
   - git:5.7.0
   - configuration-as-code:1932.v75cb_b_f1b_698d
+  - docker-workflow
+  - jcasc
   installplugins:
   - configuration-as-code
   javaOpts: null
@@ -407,3 +431,9 @@ serviceAccountAgent:
   extraLabels: {}
   imagePullSecretName: null
   name: null
+additionalSecrets: 
+    - name: docker-hub-secret
+      mountPath: "/var/jenkins_home/docker-secrets"
+      data:
+        DOCKER_USER: "devops2k23"
+        DOCKER_PASS: "Skedar@7587"
