@@ -91,29 +91,30 @@ controller:
                       username: "${DOCKER_USER}"
                       password: "${DOCKER_PASS}"
         git-job: |
-           jobs:
+          jobs:
             - script: >
-              job('seed-job') {
-                  description('Seed job to generate pipeline jobs from the tools Git repository.')
-                  scm {
-                      git {
-                          remote {
-                              url('https://github.com/Sagar-kedar/jenkin-pipeline.git')
-                              credentials('githubcred')
-                          }
-                          branch('main') 
-                      }
-                  }
-                  steps {
-                      dsl {
-                          external('jenkin-pipeline/jobs/*.groovy')
-                          removeAction('DELETE')              
-                      }
-                  }
-                  triggers {
-                      scm('* * * * *')
-                  }
-              }
+                job('seed-job') {
+                    description('Seed job to generate pipeline jobs from the tools Git repository.')
+                    scm {
+                        git {
+                            remote {
+                                url('https://github.com/Sagar-kedar/jenkin-pipeline.git')
+                                credentials('githubcred')
+                            }
+                            branch('main') 
+                        }
+                    }
+                    steps {
+                        dsl {
+                            external('jenkin-pipeline/jobs/*.groovy')
+                            removeAction('DELETE')              
+                        }
+                    }
+                    triggers {
+                        scm('* * * * *')
+                    }
+                }
+
     configMapAnnotations: {}
     configUrls: []
     defaultConfig: true
