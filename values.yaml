@@ -230,11 +230,11 @@ controller:
   installLatestPlugins: true
   installLatestSpecifiedPlugins: false
   installPlugins:
-  - kubernetes:4314.v5b_846cf499eb_
-  - workflow-aggregator:600.vb_57cdd26fdd7
-  - git:5.7.0
-  - configuration-as-code:1932.v75cb_b_f1b_698d
-  - docker-workflow:563.vd5d2e5eb_7a_7c
+  - kubernetes
+  - workflow-aggregator
+  - git
+  - configuration-as-code
+  - docker-workflow
   javaOpts: null
   jenkinsAdminEmail: null
   jenkinsHome: /var/jenkins_home
