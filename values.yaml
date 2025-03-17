@@ -235,7 +235,6 @@ controller:
   - git:5.7.0
   - configuration-as-code:1932.v75cb_b_f1b_698d
   - docker-workflow
-  - jcasc
   installplugins:
   - configuration-as-code
   javaOpts: null
