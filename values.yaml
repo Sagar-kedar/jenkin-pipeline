@@ -235,6 +235,9 @@ controller:
   - git
   - configuration-as-code
   - docker-workflow
+  - workflow-api
+  - workflow-step-api
+  - workflow-support
   javaOpts: null
   jenkinsAdminEmail: null
   jenkinsHome: /var/jenkins_home
